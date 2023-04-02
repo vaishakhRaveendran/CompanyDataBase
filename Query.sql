@@ -21,8 +21,8 @@ where E.Super_ssn =S.Ssn;
 
 
 #Rename the relation attributes within the query in sql by giving alias in the from clause
-select  *
-from Department as E(A,B,L,C,D);
+-- select  *
+-- from Department as E(A,B,L,C,D);
 
 
 
