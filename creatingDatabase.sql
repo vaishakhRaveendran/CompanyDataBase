@@ -6,6 +6,33 @@ USE `companyDatabase`;
 CREATE SCHEMA 'employeeManagement';
 USE SCHEMA 'employeeManagement';
 
+-----------------------------DEPARTMENT INFO------------------------------------
+--  create table department
+  CREATE TABLE departments (
+  dnumber INT NOT NULL,
+  dname VARCHAR(40) NOT NULL,
+  mgrSsn INT DEFAULT 777777 ,
+  mgrStartDate DATE,
+  PRIMARY KEY(dnumber),
+  UNIQUE(dname),
+  FOREIGN KEY(mgrSsn) REFERENCES employee(ssn) ON DELETE SET DEFAULT
+);
+
+--create deptlocations relation
+CREATE TABLE deptLocations
+(
+ dnumber INT NOT NULL,
+ dlocation VARCHAR(15) NOT NULL ,
+ PRIMARY KEY(dnumber,dlocation),
+ FOREIGN KEY(dnumber) REFERENCES departments(dnumber) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+--------------------------EMPLOYEE INFO---------------------------------------------------
+-- create the stack pool
+CREATE TABLE stacks(
+ stack VARCHAR(20),
+ id INT PRIMARY KEY);
+
 --create the employee table
 CREATE TABLE employees(
   fname VARCHAR(30) NOT NULL,
@@ -19,63 +46,45 @@ CREATE TABLE employees(
   superSsn INT,
   dno INT NOT NULL DEFAULT 1,
   FOREIGN KEY(superSsn) REFERENCES employee(ssn) ON DELETE SET NULL,
-  FOREIGN KEY(dno) REFERENCES department(dnumber) ON DELETE SET DEFAULT,
-  FOREIGN KEY(ssn) REFERENCES profile(ssn)
+  FOREIGN KEY(dno) REFERENCES department(dnumber) ON DELETE SET DEFAULT
   );
 
---   create table department
-  CREATE TABLE department (
-  dnumber INT NOT NULL,
-  dname VARCHAR(40) NOT NULL,
-  mgrSsn INT ,
-  Mgr_start_date DATE,
-  PRIMARY KEY(dnumber),
-  UNIQUE(dname)
+ -- create skill set of employee
+ CREATE TABLE skills(
+  employeeSsn INT,
+  stackId INT,
+  PRIMARY KEY(employeeSSn,stackId) ,
+  FOREIGN KEY(stackId) REFERENCES stacks(id)
+  FOREIGN KEY(employeeSSn) REFERENCES employee(ssn) ON DELETE CASCADE
+  );
+
+
+-------------PROJECT INFO---------------------------------------------------------------
+--create project
+CREATE TABLE projects(
+pname VARCHAR(30) NOT NULL,
+pnumber INT PRIMARY KEY ,
+plocation VARCHAR(30),
+dnum INT NOT NULL,
+FOREIGN KEY(dnum) REFERENCES departments(dnumber) ON UPDATE CASCADE
+);
+--create project requirement
+CREATE TABLE projectRequirements(
+pnumber INT PRIMARY KEY,
+stackId INT,
+FOREIGN KEY(pnumber) REFERENCES projects(pnumber) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY (stackId) rEFERENCES stacks(id) ON UPDATE CASCADE
+)
+--create worksOn relation
+CREATE TABLE worksOn(
+employeeSsn INT NOT NULL,
+pno INT NOT NULL,
+hours TIME,
+PRIMARY KEY(essn,pno),
+FOREIGN KEY(essn) REFERENCES employees(ssn) ON UPDATE CASCADE,
+FOREIGN KEY(pno) REFERENCES projects(pnumber) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE Project(
-Pname VARCHAR(30) NOT NULL,
-Pnumber INT PRIMARY KEY ,
-Plocation VARCHAR(30),
-Dnum INT NOT NULL,
-FOREIGN KEY(Dnum) REFERENCES Department(Dnumber) ON UPDATE CASCADE
-);
-
-#works on is many to many relation so it is better we maintain a relation for the relionship referencing two separate tables.
-CREATE TABLE Works_On(
-Essn INT NOT NULL,
-Pno INT NOT NULL,
-Hours TIME,
-PRIMARY KEY(Essn,Pno),
-FOREIGN KEY(Essn) REFERENCES Employee(Ssn) ON UPDATE CASCADE,
-FOREIGN KEY(Pno) REFERENCES Project(Pnumber) ON UPDATE CASCADE
-);
-
-#Dept_location is multivalued attribute we need to main a separate relation to remove redundancy.
-CREATE TABLE Dept_Locations
-(
- Dnumber INT NOT NULL,
- Dlocation VARCHAR(15) NOT NULL ,
- PRIMARY KEY(Dnumber,Dlocation),
- FOREIGN KEY(Dnumber) REFERENCES Department(Dnumber) ON UPDATE CASCADE
-);
-
-#Dependent is a weak entity.It refered along with a refrencing relation called Ess which is made part of the table as Essn.
-#A employee cant have dependent with all the fields identical
-CREATE TABLE Dependent
-(
- Essn INT,
- Dependent_name VARCHAR(15),
- Sex CHAR,
- Bdate DATE,
- Relationship VARCHAR(20),
- PRIMARY KEY(Essn,Dependent_name),
- FOREIGN KEY(Essn) REFERENCES Employee(Ssn)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-ALTER TABLE Dependent
-DROP COLUMN Sex,
-ADD COLUMN Sex CHAR(1);
 
 
 
