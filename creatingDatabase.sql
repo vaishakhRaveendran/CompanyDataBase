@@ -1,24 +1,19 @@
---create a new database
-CREATE DATABASE `Company`;
-USE `companyDatabase`;
+-- --create a new schema for employee management inside the database
+CREATE SCHEMA `employeeManagement`;
+USE  `employeeManagement`;
 
---create a new schema for employee management inside the database
-CREATE SCHEMA 'employeeManagement';
-USE SCHEMA 'employeeManagement';
-
------------------------------DEPARTMENT INFO------------------------------------
+-- -----------------------------DEPARTMENT INFO------------------------------------
 --  create table department
-  CREATE TABLE departments (
+ CREATE TABLE departments (
   dnumber INT NOT NULL,
   dname VARCHAR(40) NOT NULL,
-  mgrSsn INT DEFAULT 777777 ,
+  mgrSsn INT DEFAULT 133557799, 
   mgrStartDate DATE,
-  PRIMARY KEY(dnumber),
-  UNIQUE(dname),
-  FOREIGN KEY(mgrSsn) REFERENCES employee(ssn) ON DELETE SET DEFAULT
+  PRIMARY KEY (dnumber),
+  UNIQUE (dname)
 );
 
---create deptlocations relation
+-- --create deptlocations relation
 CREATE TABLE deptLocations
 (
  dnumber INT NOT NULL,
@@ -27,13 +22,13 @@ CREATE TABLE deptLocations
  FOREIGN KEY(dnumber) REFERENCES departments(dnumber) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
---------------------------EMPLOYEE INFO---------------------------------------------------
+-- --------------------------EMPLOYEE INFO---------------------------------------------------
 -- create the stack pool
 CREATE TABLE stacks(
  stack VARCHAR(20),
  id INT PRIMARY KEY);
 
---create the employee table
+-- --create the employee table
 CREATE TABLE employees(
   fname VARCHAR(30) NOT NULL,
   minit CHAR(20),
@@ -45,22 +40,23 @@ CREATE TABLE employees(
   salary INT,
   superSsn INT,
   dno INT NOT NULL DEFAULT 1,
-  FOREIGN KEY(superSsn) REFERENCES employee(ssn) ON DELETE SET NULL,
-  FOREIGN KEY(dno) REFERENCES department(dnumber) ON DELETE SET DEFAULT
-  );
+  FOREIGN KEY(dno) REFERENCES departments(dnumber) ON DELETE SET DEFAULT,
+  FOREIGN KEY(superSsn) REFERENCES employees(ssn) ON DELETE SET NULL
+);
+ALTER TABLE departments ADD FOREIGN KEY (mgrSsn) REFERENCES employees(ssn) ON DELETE SET DEFAULT;
 
  -- create skill set of employee
  CREATE TABLE skills(
   employeeSsn INT,
   stackId INT,
   PRIMARY KEY(employeeSSn,stackId) ,
-  FOREIGN KEY(stackId) REFERENCES stacks(id)
-  FOREIGN KEY(employeeSSn) REFERENCES employee(ssn) ON DELETE CASCADE
+  FOREIGN KEY(stackId) REFERENCES stacks(id),
+  FOREIGN KEY(employeeSSn) REFERENCES employees(ssn) ON DELETE CASCADE
   );
 
 
--------------PROJECT INFO---------------------------------------------------------------
---create project
+-- -------------PROJECT INFO---------------------------------------------------------------
+-- --create project
 CREATE TABLE projects(
 pname VARCHAR(30) NOT NULL,
 pnumber INT PRIMARY KEY ,
@@ -68,20 +64,20 @@ plocation VARCHAR(30),
 dnum INT NOT NULL,
 FOREIGN KEY(dnum) REFERENCES departments(dnumber) ON UPDATE CASCADE
 );
---create project requirement
+-- --create project requirement
 CREATE TABLE projectRequirements(
 pnumber INT PRIMARY KEY,
 stackId INT,
 FOREIGN KEY(pnumber) REFERENCES projects(pnumber) ON UPDATE CASCADE ON DELETE CASCADE,
-FOREIGN KEY (stackId) rEFERENCES stacks(id) ON UPDATE CASCADE
-)
---create worksOn relation
+FOREIGN KEY (stackId) REFERENCES stacks(id) ON UPDATE CASCADE
+);
+-- --create worksOn relation
 CREATE TABLE worksOn(
 employeeSsn INT NOT NULL,
 pno INT NOT NULL,
 hours TIME,
-PRIMARY KEY(essn,pno),
-FOREIGN KEY(essn) REFERENCES employees(ssn) ON UPDATE CASCADE,
+PRIMARY KEY(employeeSsn,pno),
+FOREIGN KEY(employeeSsn) REFERENCES employees(ssn) ON UPDATE CASCADE,
 FOREIGN KEY(pno) REFERENCES projects(pnumber) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
