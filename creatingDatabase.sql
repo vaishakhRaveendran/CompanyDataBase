@@ -40,10 +40,32 @@ CREATE TABLE employees(
   salary INT,
   superSsn INT,
   dno INT NOT NULL DEFAULT 1,
-  FOREIGN KEY(dno) REFERENCES departments(dnumber) ON DELETE SET DEFAULT,
   FOREIGN KEY(superSsn) REFERENCES employees(ssn) ON DELETE SET NULL
 );
+
+INSERT INTO employees(fname, minit, lname, ssn, bdate, address,sex, salary,superSsn,dno) VALUES
+('Roosevelt', 'D', 'Franklin', 123456009, '1923-01-09', '731-Fondren-Spring-TX', 'M', 80000, NULL,5),
+('Jennifer', 'S', 'Wallace', 987654321, '1941-06-20', '291-Berry-Bellaire-TX', 'F', 43000, NULL, 6),
+('James', 'E', 'Borg', 888665555, '1937-11-10', '450-Stone-Houston-TX', 'M', 55000, NULL, 1),
+('Alicia', 'J', 'Zelaya', '999887777', '1968-01-19', '3321-Castle-Spring-TX', 'F', 25000, 987654321, 6),
+('Ahmad', 'V', 'Jabbar', 987987987, '1969-03-29', '980-Dallas-Houston-TX', 'M', 25000, 987654321, 3),
+('Monica', 'E', 'Hailey', 987614321, '1981-06-20', '291-Berry-Terrace-TX', 'F', 43000, 888665555, 4),
+('Franklin', 'T', 'Wong', 333445555, '1955-12-08', '638-Voss-Houston-TX', 'M', 40000, 888665555, 7),
+('John', 'B', 'Smith', 123456789, '1965-01-09', '731-Fondren-Houston-TX', 'M', 30000, 333445555,5),
+('Ramesh', 'K', 'Narayan', 666884444, '1962-09-15', '975-Fire-Oak-Humble-TX', 'M', 38000, 333445555, 1),
+('Joyce', 'A', 'English', 453453453, '1972-07-31', '5631-Rice-Houston-TX', 'F', 25000, 333445555, 7);
+
+INSERT INTO departments VALUES
+(5,'Research', 333445555, '1988-05-22'),
+(2,'IT_Support', 987654321, '1998-05-22'),
+(4,'Administration', 666884444,'1995-01-01'),
+(7,'Production', 888665555, '1985-06-19'),
+(8,'Development', 123456789, '1981-03-19'),
+(6,'Testing', 987987987, '1981-08-15'),
+(1,'Trainee', 453453453, '1989-06-19'),
+(3,'Headquarters',123456009, '1981-06-19');
 ALTER TABLE departments ADD FOREIGN KEY (mgrSsn) REFERENCES employees(ssn) ON DELETE SET DEFAULT;
+ALTER TABLE employees ADD  FOREIGN KEY(dno) REFERENCES departments(dnumber) ON DELETE SET DEFAULT;
 
  -- create skill set of employee
  CREATE TABLE skills(
@@ -53,7 +75,6 @@ ALTER TABLE departments ADD FOREIGN KEY (mgrSsn) REFERENCES employees(ssn) ON DE
   FOREIGN KEY(stackId) REFERENCES stacks(id),
   FOREIGN KEY(employeeSSn) REFERENCES employees(ssn) ON DELETE CASCADE
   );
-
 
 -- -------------PROJECT INFO---------------------------------------------------------------
 -- --create project
