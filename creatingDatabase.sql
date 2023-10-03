@@ -25,7 +25,7 @@ CREATE TABLE deptLocations
 -- --------------------------EMPLOYEE INFO---------------------------------------------------
 -- create the stack pool
 CREATE TABLE stacks(
- stack VARCHAR(20),
+ stack VARCHAR(40),
  id INT PRIMARY KEY);
 
 -- --create the employee table
@@ -87,8 +87,9 @@ FOREIGN KEY(dnum) REFERENCES departments(dnumber) ON UPDATE CASCADE
 );
 -- --create project requirement
 CREATE TABLE projectRequirements(
-pnumber INT PRIMARY KEY,
+pnumber INT ,
 stackId INT,
+PRIMARY KEY(pnumber,stackId),
 FOREIGN KEY(pnumber) REFERENCES projects(pnumber) ON UPDATE CASCADE ON DELETE CASCADE,
 FOREIGN KEY (stackId) REFERENCES stacks(id) ON UPDATE CASCADE
 );
