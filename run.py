@@ -1,10 +1,12 @@
 from flask import Flask, redirect, url_for, render_template
+from forms import addEmployeeForm,addProjectForm
 
 app = Flask(__name__)
 
 @app.route("/add_employee")
 def add_employee():
-    return render_template("add_employee.html")
+    form=addEmployeeForm()
+    return render_template("add_employee.html",form=form)
 
 @app.route("/home_page")
 def home_page():
