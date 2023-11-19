@@ -1,49 +1,50 @@
 {% extends "layout.html" %}
 {% block content %}
- <div class="content-section">
-     <form method="POST"action="">
-         <fieldset class="form-group">
-             <div class="form-group">
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag()}}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Add Employee </legend>
+            <div class="form-group">
                 {{ form.fname.label(class="form-control-label") }}
-                {{ form.fname(class="form-control") }}
+                {{ form.fname(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.minit.label(class="form-control-label") }}
-                {{ form.minit(class="form-control") }}
+                {{ form.minit(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.lname.label(class="form-control-label") }}
-                {{ form.lname(class="form-control") }}
+                {{ form.lname(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.ssn.label(class="form-control-label") }}
-                {{ form.ssn(class="form-control") }}
+                {{ form.ssn(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.bdate.label(class="form-control-label") }}
-                {{ form.bdate(class="form-control") }}
+                {{ form.bdate(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.address.label(class="form-control-label") }}
-                {{ form.address(class="form-control") }}
+                {{ form.address(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.sex.label(class="form-control-label") }}
-                {{ form.sex(class="form-control") }}
+                {{ form.sex(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.salary.label(class="form-control-label") }}
-                {{ form.salary(class="form-control") }}
+                {{ form.salary(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.super_ssn.label(class="form-control-label") }}
-                {{ form.super_ssn(class="form-control") }}
+                {{ form.super_ssn(class="form-control form-control-lg") }}
             </div>
+            </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
-
-         </fieldset>
-     </form>
- </div>
-{% endcontent block %}
+    </form>
+</div>
+{% endblock content %}

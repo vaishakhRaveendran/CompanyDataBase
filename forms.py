@@ -13,7 +13,7 @@ class addEmployeeForm(FlaskForm):
     bdate = DateField('Birthdate', validators=[DataRequired()])
     address = StringField('Address', validators=[Length(max=60)])
     sex = SelectField('Sex', choices=[('M', 'Male'), ('F', 'Female')], validators=[DataRequired()])
-    salary = IntegerField('Salary', validators=[NumberRange(min=0)])
+    salary = IntegerField('Salary', validators=[DataRequired()])
     super_ssn = IntegerField('Supervisor SSN')
 #submit field will send back info back to us.
     submit = SubmitField('Add New Employee')
