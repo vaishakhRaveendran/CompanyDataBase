@@ -4,7 +4,7 @@
     <form method="POST" action="">
         {{ form.hidden_tag()}}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Add Employee </legend>
+            <legend class="border-bottom mb-4">ADD NEW EMPLOYEE</legend>
             <div class="form-group">
                 {{ form.fname.label(class="form-control-label") }}
                 {{ form.fname(class="form-control form-control-lg") }}
@@ -16,6 +16,10 @@
             <div class="form-group">
                 {{ form.lname.label(class="form-control-label") }}
                 {{ form.lname(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{ form.dno.label(class="form-control-label") }}
+                {{ form.dno(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.ssn.label(class="form-control-label") }}
