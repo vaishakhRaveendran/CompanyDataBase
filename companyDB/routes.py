@@ -7,7 +7,10 @@ from companyDB import app,db
 @app.route("/home")
 def home():
     employees = Employee.query.all()
-    return render_template('home.html',employees=employees)
+    departments = Department.query.all()
+    projects=Project.query.all()
+    return render_template('home.html',employees=employees,departments=departments,projects=projects)
+
 @app.route("/add_employees",methods=['POST','GET'])
 def add_employees():
     form=addEmployeeForm()
