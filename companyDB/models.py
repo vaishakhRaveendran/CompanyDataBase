@@ -1,4 +1,4 @@
-from run import db
+from companyDB import db
 from datetime import datetime
 class Employee(db.Model):
     __tablename__ = 'employees'
