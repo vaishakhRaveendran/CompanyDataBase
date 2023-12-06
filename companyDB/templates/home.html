@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% block updates %}
+
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <form method="post" action=" ">
+        <table class="table table-bordered" >
+            <h2>EMPLOYEES</h2>
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Middle Initial</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">SSN</th>
+              <th scope="col">Birth Date</th>
+              <th scope="col">Address</th>
+              <th scope="col">Sex</th>
+              <th scope="col">Salary</th>
+              <th scope="col">Supervisor SSN</th>
+              <th scope="col">Department Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for employee in employees %}
+                <tr>
+                  <th scope="row">{{ loop.index }}</th>
+                  <td>{{ employee.fname }}</td>
+                  <td>{{ employee.minit }}</td>
+                  <td>{{ employee.lname }}</td>
+                  <td>{{ employee.ssn }}</td>
+                  <td>{{ employee.bdate }}</td>
+                  <td style="width: 500px; overflow: hidden; white-space: nowrap;">{{ employee.address }}</td>
+                  <td>{{ employee.sex }}</td>
+                  <td>{{ employee.salary }}</td>
+                  <td>{{ employee.superSsn }}</td>
+                  <td>{{ employee.dno }}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+
+          <table class="table table-bordered" >
+              <h2>DEPARTMENTS</h2>
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Department</th>
+                  <th scope="col">Dept No</th>
+                  <th scope="col">Manager SSN</th>
+                  <th scope="col">Start Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for dept in departments %}
+                    <tr>
+                      <th scope="row">{{ loop.index }}</th>
+                      <td>{{ dept.dname }}</td>
+                      <td>{{ dept.dnumber}}</td>
+                      <td>{{ dept.mgrSsn }}</td>
+                      <td>{{ dept.mgrStartDate }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+
+            <table class="table table-bordered" >
+              <h2>PROJECTS</h2>
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Project</th>
+                  <th scope="col">Project No</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Department</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for project in projects %}
+                    <tr>
+                      <th scope="row">{{ loop.index }}</th>
+                      <td>{{ project.pname }}</td>
+                      <td>{{ project.pnumber}}</td>
+                      <td>{{ project.plocation }}</td>
+                      <td>{{ project.department['dname'] }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+    </form>
+</div>
+
+
+{% endblock content %}

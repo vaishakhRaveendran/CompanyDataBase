@@ -91,3 +91,20 @@ def add_projects():
         return redirect(url_for('home'))
     return render_template('add_project.html', title='add project', form=form)
 
+
+
+@app.route('/remove_entity', methods=['GET', 'POST'])
+def remove_entity():
+    form = removeForm()
+
+    if form.validate_on_submit():
+        if form.confirmation.data.upper() == 'DELETE':
+            entity_type = form.entity_type.data
+            entity_id = form.entity_id.data
+
+            if entity_type == 'project':
+
+            elif entity_type == 'employee':
+
+
+    return render_template('delete_entity.html', form=form)
