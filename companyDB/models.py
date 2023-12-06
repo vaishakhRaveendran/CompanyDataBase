@@ -39,3 +39,18 @@ class Department(db.Model):
 
     def __repr__(self):
         return f"Department('{self.dname}', '{self.dnumber}')"
+
+
+class Skill(db.Model):
+    __tablename__ = 'skills'
+
+    employeeSsn = db.Column(db.Integer, db.ForeignKey('employees.ssn', ondelete='CASCADE'), primary_key=True)
+    stackId = db.Column(db.Integer, db.ForeignKey('stacks.id', ondelete='CASCADE'), primary_key=True)
+    stack = db.relationship('Stack', back_populates='skills')
+
+class Stack(db.Model):
+    __tablename__ = 'stacks'
+
+    id = db.Column(db.Integer, primary_key=True)
+    stack = db.Column(db.String(40), nullable=False)
+    skills = db.relationship('Skill', back_populates='stack')

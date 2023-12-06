@@ -36,7 +36,7 @@ CREATE TABLE employees(
   ssn INT PRIMARY KEY,
   bdate DATE,
   address VARCHAR(60),
-  sex VARCHAR(5),
+  sex VARCHAR(5),	
   salary INT,
   superSsn INT,
   dno INT NOT NULL DEFAULT 1,
