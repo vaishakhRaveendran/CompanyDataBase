@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag()}}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">UNLOCK NEW SKILL </legend>
+            <div class="form-group">
+                {{ form. employeeSsn.label(class="form-control-label") }}
+                {{ form. employeeSsn(class="form-control form-control-lg") }}
+            </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+    </form>
+    {% if profiles %}
+         <table class="table table-bordered" >
+              <h2>PROFILE</h2>
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">EmployeeSSn</th>
+                  <th scope="col">Stack ID</th>
+                  <th scope="col">STACK</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for profile in profiles %}
+                    <tr>
+                      <th scope="row">{{ loop.index }}</th>
+                      <td>{{ profile.employeeSsn }}</td>
+                      <td>{{ profile.stack}}</td>
+                      <td>{{ profile.stackId }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+    {% endif %}
+</div>
+{% endblock content %}

@@ -1,7 +1,8 @@
 from companyDB.models import Employee,Project,Department,Skill,Stack
-from flask import Flask, render_template,flash,redirect,url_for
-from companyDB.forms import addEmployeeForm, addProjectForm,addSkill
+from flask import Flask, render_template,flash,redirect,url_for,request
+from companyDB.forms import addEmployeeForm, addProjectForm,addSkill,viewProfile
 from companyDB import app,db
+from sqlalchemy.orm import aliased
 
 @app.route("/")
 @app.route("/home")
@@ -28,6 +29,27 @@ def add_skill():
         flash(f'New Skill Unlocked !', 'success')
         return redirect(url_for('home'))
     return render_template('add_skill.html', title='add skill', form=form)
+
+
+@app.route('/view_profile', methods=['GET', 'POST'])
+def view_profile():
+    form = viewProfile(request.form)
+    employees = Employee.query.all()
+    form.employeeSsn.choices = [(employee.ssn, f'{employee.fname} {employee.lname}') for employee in employees]
+    if request.method == 'POST' and form.validate():
+        employee_ssn = form.employeeSsn.data
+        stacks_alias = aliased(Stack)
+        profiles = (
+            db.session.query(Skill.employeeSsn, stacks_alias.stack, Skill.stackId)
+            .join(stacks_alias, Skill.stackId == stacks_alias.id)
+            .filter(Skill.employeeSsn == employee_ssn)
+            .all()
+        )
+        return render_template('view_profile.html', form=form, profiles=profiles)
+
+    return render_template('view_profile.html', form=form)
+
+
 
 
 @app.route("/add_employees",methods=['POST','GET'])
