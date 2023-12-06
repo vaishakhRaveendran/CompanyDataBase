@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, DateField, SelectField, SubmitField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length,EqualTo
 
 
 
@@ -37,11 +37,11 @@ class addStacks(FlaskForm):
 
 
 class viewProfile(FlaskForm):
-    employeeSsn = SelectField('Employee SSN', coerce=str, validators=[DataRequired()])
+    employeeSsn = SelectField('SSN', coerce=str, validators=[DataRequired()])
     submit = SubmitField('SUBMIT')
 
 class removeForm(FlaskForm):
-    entity_type = SelectField('Select Entity Type', choices=[('project', 'Project'), ('employee', 'Employee')])
-    entity_id = StringField('Entity ID')
-    confirmation = StringField('Type "DELETE" to confirm', validators=[validators.DataRequired(), validators.EqualTo('DELETE', message='Confirmation mismatch')])
-    delete_button = SubmitField('Remove')
+    entity_type = SelectField('Entity', choices=[('project', 'Project'), ('employee', 'Employee')])
+    entity_id = StringField('ID')
+    confirmation = StringField('Type "DELETE" to confirm', validators=[DataRequired()])
+    submit = SubmitField('Remove')

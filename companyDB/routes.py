@@ -1,6 +1,6 @@
 from companyDB.models import Employee,Project,Department,Skill,Stack
 from flask import Flask, render_template,flash,redirect,url_for,request
-from companyDB.forms import addEmployeeForm, addProjectForm,addSkill,viewProfile
+from companyDB.forms import addEmployeeForm, addProjectForm,addSkill,viewProfile,removeForm
 from companyDB import app,db
 from sqlalchemy.orm import aliased
 
@@ -27,7 +27,7 @@ def add_skill():
         db.session.add(skill_instance)
         db.session.commit()
         flash(f'New Skill Unlocked !', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('view_profile'))
     return render_template('add_skill.html', title='add skill', form=form)
 
 
@@ -93,6 +93,8 @@ def add_projects():
 
 
 
+
+
 @app.route('/remove_entity', methods=['GET', 'POST'])
 def remove_entity():
     form = removeForm()
@@ -102,9 +104,26 @@ def remove_entity():
             entity_type = form.entity_type.data
             entity_id = form.entity_id.data
 
-            if entity_type == 'project':
+            if entity_type == 'employee':
+                employee_to_delete = Employee.query.filter_by(ssn=entity_id).first()
+                if employee_to_delete:
+                    db.session.delete(employee_to_delete)
+                    db.session.commit()
+                    flash('Employee deleted successfully!', 'success')
+                    return redirect(url_for('home'))
+                else:
+                    flash('Employee not found.', 'danger')
+                    return redirect(url_for('home'))
 
-            elif entity_type == 'employee':
+            elif entity_type == 'project':
+                project_to_delete = Project.query.filter_by(pnumber=entity_id).first()
+                if project_to_delete:
+                    db.session.delete(project_to_delete)
+                    db.session.commit()
 
-
-    return render_template('delete_entity.html', form=form)
+                    flash('Project deleted successfully!', 'success')
+                    return redirect(url_for('home'))
+                else:
+                    flash('Project not found.', 'danger')
+                    return redirect(url_for('home'))
+    return render_template('remove_entity.html', form=form)

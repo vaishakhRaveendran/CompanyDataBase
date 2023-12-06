@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag()}}
+        <fieldset class="form-group">
+            <div>
+            {{ form.entity_type.label }}
+            {{ form.entity_type(class="form-control") }}
+            </div>
+
+            <div>
+                {{ form.entity_id.label }}
+                {{ form.entity_id(class="form-control") }}
+            </div>
+            <div>
+                {{ form.confirmation.label }}
+                {{ form.confirmation(class="form-control") }}
+                {% if form.confirmation.errors %}
+                    <p class="error">{{ form.confirmation.errors[0] }}</p>
+                {% endif %}
+            </div>
+        </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+    </form>
+</div>
+{% endblock content %}
